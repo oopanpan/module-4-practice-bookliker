@@ -20,7 +20,7 @@ function App() {
 
   useEffect( () => {
     getAllBooks()
-  },[])
+  },[selectedBook])
 
   const getAllBooks = async () =>{
     await axios.get(booksURL)
@@ -33,8 +33,7 @@ function App() {
 
   const renderUsers = () => selectedBook.users.map( user => <List.Item icon="user" content={user.username} />)
 
-  const handleLike = (e) => {
-    e.preventDefault()
+  const handleLike = () => {
     let updatedUsers
     const currentLikes = selectedBook.users.map(user=> user.id)
     if (!currentLikes.includes(currentUser.id)){
@@ -63,6 +62,7 @@ function App() {
           <p>{selectedBook.description ? selectedBook.description : 'Book description'}</p>
           <Button
             onClick={handleLike}
+            disabled={selectedBook.title ? false : true}
             color="red"
             content="Like"
             icon="heart"
